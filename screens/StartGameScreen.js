@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { StyleSheet, TextInput, View, Alert } from "react-native";
+import { StyleSheet, TextInput, View, Alert, Text } from "react-native";
 import PrimaryButton from "../components/PrimaryButton";
 import Colors from "../components/constants/Colors";
+import Title from "../components/Title";
 
-const StartGameScreen = ({ setVisibleScreen }) => {
+const StartGameScreen = ({ setVisibleScreen, setUserNumber }) => {
   const [userInput, setUserInput] = useState("");
 
   const handleOnChange = (input) => {
@@ -32,23 +33,28 @@ const StartGameScreen = ({ setVisibleScreen }) => {
       return;
     }
     setVisibleScreen(true);
+    setUserNumber(userInput);
   };
 
   return (
-    <View style={styles.inputContainer}>
-      <TextInput
-        onChangeText={handleOnChange}
-        style={styles.textInput}
-        maxLength={2}
-        inputMode="numeric"
-        value={userInput}
-      />
-      <View style={styles.buttonContainer}>
-        <View style={styles.buttonInnerContainer}>
-          <PrimaryButton onPress={resetInputHandler}>Reset</PrimaryButton>
-        </View>
-        <View style={styles.buttonInnerContainer}>
-          <PrimaryButton onPress={confirmInputHandler}>Confirm</PrimaryButton>
+    <View style={styles.rootContainer}>
+      <Title title={"My ass guess"} />
+      <View style={styles.inputContainer}>
+        <Text style={styles.instructionText}>Enter a number</Text>
+        <TextInput
+          onChangeText={handleOnChange}
+          style={styles.textInput}
+          maxLength={2}
+          inputMode="numeric"
+          value={userInput}
+        />
+        <View style={styles.buttonContainer}>
+          <View style={styles.buttonInnerContainer}>
+            <PrimaryButton onPress={resetInputHandler}>Reset</PrimaryButton>
+          </View>
+          <View style={styles.buttonInnerContainer}>
+            <PrimaryButton onPress={confirmInputHandler}>Confirm</PrimaryButton>
+          </View>
         </View>
       </View>
     </View>
@@ -59,7 +65,7 @@ export default StartGameScreen;
 const styles = StyleSheet.create({
   inputContainer: {
     padding: 16,
-    marginTop: 100,
+    marginTop: 50,
     backgroundColor: Colors.primary800,
     marginHorizontal: 24,
     borderRadius: 8,
@@ -85,5 +91,14 @@ const styles = StyleSheet.create({
   },
   buttonInnerContainer: {
     flex: 1,
+  },
+  rootContainer: {
+    flex: 1,
+    marginTop: 100,
+    alignItems: "center",
+  },
+  instructionText: {
+    color: Colors.accent500,
+    fontSize: 23,
   },
 });
